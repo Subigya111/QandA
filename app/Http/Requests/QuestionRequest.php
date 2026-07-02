@@ -23,7 +23,8 @@ class QuestionRequest extends FormRequest
     public function rules(): array
     {
         return [
-             'question'=>'required|string|max:255'
+            'question'=>'required|string|max:255',
+            'category'=>'required'
         ];
     }
 }

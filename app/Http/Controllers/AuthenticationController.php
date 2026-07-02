@@ -7,6 +7,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 class AuthenticationController extends Controller
 {
     public function register(RegisterRequest $request){
@@ -14,7 +15,8 @@ class AuthenticationController extends Controller
         User::create([
             'name'=>$validated['name'],
             'email'=>$validated['email'],
-            'password'=>$validated['password']
+            'password'=>$validated['password'],
+            'remember_token'=>Str::random()
         ]);
         return redirect()->route('login')->with('success','User Registered');
     }
@@ -24,11 +26,12 @@ class AuthenticationController extends Controller
             echo "Invalid Credentials";
         }
         $request->session()->regenerate();
+        return redirect()->route('showQues')->with(['success'=>'Logged in successfully']);
     }
     public function logout(Request $request){
         Auth::logout(); //removes authenticated user
         $request->session()->invalidate(); //destroys old session value
         $request->session()->regenerateToken(); //creates fresh security token
-        echo "logged out";
+        return redirect()->route('login')->with(['success'=>'Logged out successfully']);
     }
 }

@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('questions', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->string('question');
-            $table->string('category');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+        Schema::table('answers', function (Blueprint $table) {
+                        $table->dropColumn('updated_at');
+
         });
     }
 
@@ -25,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('questions');
+        Schema::table('answers', function (Blueprint $table) {
+                        $table->timestamp('updated_at')->nullable();
+
+        });
     }
 };
