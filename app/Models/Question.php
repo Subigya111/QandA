@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-    
-#[Fillable(['question','user_id','category'])]
+#[Fillable(['question','user_id','category','description','imagePath'])]
 
 class Question extends Model
 {

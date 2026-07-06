@@ -17,5 +17,6 @@ Route::get('/',function(){
 Route::post('/login',[AuthenticationController::class,'login'])->name('loginSubmit');
 Route::post('/register',[AuthenticationController::class,'register'])->name('registerSubmit');
 Route::post('/logout',[AuthenticationController::class,'logout'])->name('logout');
-Route::post('/question',[QuestionController::class,'storeQuestions'])->name('questions.set');
-Route::get('/question',[QuestionController::class,'showForm'])->name('showQues');
+Route::post('/question',[QuestionController::class,'storeQuestions'])->name('questions.store');
+Route::get('/question/form',[QuestionController::class,'showForm'])->name('showQuesForm');
+Route::get('/question/all',[QuestionController::class,'showAllQues'])->name('showAllQuestion');

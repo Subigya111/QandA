@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
+            $table->string('imagePath')->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

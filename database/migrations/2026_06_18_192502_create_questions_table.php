@@ -15,8 +15,11 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('question');
+            $table->string('description')->nullable();
             $table->string('category');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('imagePath')->nullable(); 
+            
         });
     }
 

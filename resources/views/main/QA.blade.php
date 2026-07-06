@@ -17,15 +17,27 @@
 						<div class="alert alert-success">{{ session('success') }}</div>
 					@endif
 
-					<form method="POST" action="{{ route('questions.set') }}">
+          				<form method="POST" action="{{ route('questions.store') }}" enctype="multipart/form-data">
 						@csrf
 
 						<div class="mb-3">
 							<label for="question" class="form-label">Question</label>
-							<textarea name="question" id="question" rows="3" class="form-control" placeholder="Write your question" value="{{ old('question') }}" required></textarea>
+							<textarea name="question" id="question" rows="2" class="form-control" placeholder="Write your question" value="{{ old('question') }}" required></textarea>
+
 							
 							
 						</div>
+						<div class="mb-3">
+							
+							<textarea name="description" id="description" rows="4" class="form-control" placeholder="Description(optional)" value="{{ old('description') }}" ></textarea>
+
+							
+							
+						</div>
+						<div class="mb-3">
+              				<label class="form-label fw-semibold">Picture</label>
+              				<input id="avatar" name="image" type="file" accept="image/*" class="form-control">
+            			</div>
 
 						<div class="mb-3">
 							<label class="form-label">Category</label>
@@ -54,7 +66,7 @@
 						</div>
 
 						<div class="d-flex justify-content-end">
-							<button type="submit" class="btn btn-primary">Save</button>
+							<button type="submit" class="btn btn-primary">Ask</button>
 						</div>
 					</form>
 				</div>
