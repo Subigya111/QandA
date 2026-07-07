@@ -1,46 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Question & Answer</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body class="bg-light">
-<div class="container py-5">
-	<div class="row justify-content-center">
-		<div class="col-md-8">
-			<div class="card">
-				<div class="card-header">Answer</div>
-				<div class="card-body">
-					@if(session('success'))
-						<div class="alert alert-success">{{ session('success') }}</div>
-					@endif
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-						@csrf
+<div class="mt-4">
 
-						<div class="mb-3">
-							<label for="answer" class="form-label">Answer</label>
-							<textarea name="answer" id="question" rows="2" class="form-control" placeholder="Write your answer" value="{{ old('answer') }}" required></textarea>
+    <!-- Success Message -->
+    @if(session('success'))
+        <div class="alert alert-success rounded-4 shadow-sm">
+            {{ session('success') }}
+        </div>
+    @endif
 
-							
-							
-						</div>
-						
-						<div class="mb-3">
-              				<label class="form-label fw-semibold">Picture</label>
-              				<input id="avatar" name="image" type="file" accept="image/*" class="form-control">
-            			</div>							
-						</div>
+    <div class="card mb-4 shadow-sm border-0 rounded-4">
+        <div class="card-body">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-3">
+                <div>
+                    <h4 class="mb-1 text-muted">Join the conversation</h4>
+                </div>
+                <span class="badge bg-primary text-white py-2 px-3">{{ $answers->count() }} comment{{ $answers->count() === 1 ? '' : 's' }}</span>
+            </div>
 
-						<div class="d-flex justify-content-end">
-							<button type="submit" class="btn btn-primary">Answer</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+            @if(!$authAnswer)
+                <div class="border rounded-4 p-3 bg-light">
+                    <h5 class="mb-3">Add Comment</h5>
+                    <form action="{{route('answers.store',$question)}}" method="POST">
+                        @csrf
+                        <textarea name="answer" class="form-control mb-3" placeholder="Write your answer..." rows="4"></textarea>
+                        <button type="submit" class="btn btn-primary w-100">Submit answer</button>
+                    </form>
+                </div>
+            @else
+                <div class="alert alert-info rounded-4">
+                    You already posted a comment on this post.
+                </div>
+            @endif
+        </div>
+    </div>
+
+    @forelse($answers as $answer)
+        <div class="card mb-3 shadow-sm rounded-4">
+            <div class="card-body">
+                <div class="d-flex flex-column flex-sm-row justify-content-between gap-2 mb-2">
+                    <div>
+                        <strong>{{ $answer->user->name }}</strong>
+                        <div class="text-muted small">{{ optional($answer->created_at)->diffForHumans() }}</div>
+                    </div>
+                    @if(auth()->id() == $answer->user_id)
+                        <div class="d-flex gap-2">
+                            <form action="#" method="GET" class="m-0">
+                                @csrf
+                                @method('GET')
+                                <button class="btn btn-sm btn-warning">Edit</button>
+                            </form>
+                            <form action="#" method="POST" class="m-0">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    @endif
+                </div>
+                <p class="mb-0">{{ $answer->answer }}</p>
+            </div>
+        </div>
+    @empty
+        <div class="alert alert-secondary rounded-4">
+            No answer yet. Be the first to leave feedback.
+        </div>
+    @endforelse
+
+    <!-- Errors -->
+    @if($errors->any())
+        <div class="alert alert-danger mt-3 rounded-4 shadow-sm">
+            <ul class="mb-0">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
 </div>
-</body>
-</html>

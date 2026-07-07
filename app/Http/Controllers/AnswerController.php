@@ -5,15 +5,24 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\Answer;
+use App\Http\Requests\AnswerRequest;
 class AnswerController extends Controller
 {
-    protected $fillable=['answer','question_id','user_id'];
-    public function storeAnswers(Request $request,Question $question){
-        $validate=$request->validate([
-            'answer'=>'required|string|max:255',        
+    public function storeAnswers(AnswerRequest $request,Question $question){
+
+        $validated=$request->validated();
+        $path=null;
+        if ($request->hasFile('image')){
+            $path=$request->file('image')->store('answerPics','public');
+        }
+        Answer::create([
+            'answer'=>$validated['answer'],
+            'user_id'=>auth()->id(),
+            'question_id'=>$question->id,
+            'imagePath'=>$path
+
         ]);
-        $validate['question_id']=$question->id;
-        $validate['user_id']=auth()->id();
-        Answer::create($validate);
+        return redirect()->route('showOneQuestion',$question)->with('success','Answer added');
+        
     }
 }
