@@ -1,60 +1,72 @@
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-            <h1 class="text-center mb-5">All Questions</h1>
+<div class="container my-5" style="background: #eef7ff; padding: 1.5rem; border-radius: 16px;">
+    <header class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
+        <div>
+            <h1 class="mb-1">All Posts</h1>
+            <p class="text-muted mb-0">Browse all posts.</p>
+        </div>
+    </header>
 
-            @forelse($questions as $question)
-                <div class="card shadow-sm mb-4">
+    @if(session('success'))
+        <div class="alert alert-success rounded-4 shadow-sm">
+            {{ session('success') }}
+        </div>
+    @endif
 
-                    @if($question->imagePath)
-                        <img src="{{ Storage::url($question->imagePath) }}"
-                             class="card-img-top"
-                             alt="{{ $question->question }}">
-                    @endif
+    @guest
+        <div class="alert alert-info rounded-4 shadow-sm">
+            You are not logged in. <a href="{{ route('login') }}">Login</a> to read the full post.
+        </div>
+    @endguest
 
-                    <div class="card-body">
+    <div class="row g-4">
+        @forelse($questions as $question)
+            <div class="col-12">
+                <a href="{{route('showOneQuestion',$question)}}" class="text-decoration-none">
+                    <div class="card shadow-sm border-0 rounded-4 overflow-hidden" style="height: 230px; background: linear-gradient(135deg, #ffffff, #f3ebff); border: 1px solid #e8dcff;">
+                        <div class="row g-0 h-100">
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <span class="badge bg-primary">{{ $question->category }}</span>
 
-                        <div class="d-flex justify-content-between mb-3">
-                            <span class="badge bg-primary">
-                                {{ $question->category }}
-                            </span>
+                                    <h2 class="h4 card-title mt-2">
+                                        {{ $question->question }}
+                                    </h2>
 
-                            <small class="text-muted">
-                                {{ $question->created_at->format('M d, Y') }}
-                            </small>
+                                    <p class="text-muted">
+                                        {{ Str::limit($question->description, 10) }}Read More
+                                    </p>
+
+                                    <p class="mb-0">
+                                        By : <strong>{{ $question->user->name ?? 'Unknown' }}</strong>
+                                    </p>
+
+                                    <p class="text-secondary">
+                                        {{ $question->created_at->diffForHumans() }}
+                                    </p>
+                                </div>
+                            </div>
+                            @if(!empty($question->imagePath))
+                            <div class="col-md-4 d-flex align-items-center justify-content-center p-3">
+                                <img src="{{ Storage::url($question->imagePath) }}" 
+                                style="width:100%; height:170px;
+                                object-fit:cover; border-radius:12px;"
+                                alt="Question Image">
+                            </div>
+                            @endif
                         </div>
-
-                        <h3 class="card-title">
-                            {{ $question->question }}
-                        </h3>
-
-                        @if($question->description)
-                            <p class="card-text">
-                                {{ $question->description }}
-                            </p>
-                        @endif
-
-
-                        <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">
-                                Posted by <strong>{{ $question->user->name }}</strong>
-                            </small>
-
-                        </div>
-
                     </div>
-                    <hr>
-                    @include('answer.answer')
-                </div>
-
-
-            @empty
-                <div class="alert alert-info text-center">
+                </a>
+            </div>
+        @empty
+            <div class="col-12">
+                <div class="alert alert-info rounded-4 shadow-sm">
                     No questions available.
                 </div>
-            @endforelse
-
-        </div>
+            </div>
+        @endforelse
     </div>
 </div>
+
+

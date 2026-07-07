@@ -27,11 +27,11 @@ class AuthenticationController extends Controller
     }
     public function login(LoginRequest $request){
         $validated= $request->validated();
-        if(!Auth::attempt($validated)){
+        if(!Auth::attempt($validated)){ //finds user by email,checks hashed password,logs user in,sets session
             return back()->with('error', 'Invalid credentials');
         }
         $request->session()->regenerate();
-        return redirect()->route('showQuesForm')->with('success','Logged in successfully');
+        return redirect()->route('showAllQuestion')->with('success','Logged in successfully');
     }
     public function logout(Request $request){
         Auth::logout(); //removes authenticated user
