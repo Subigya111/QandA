@@ -19,7 +19,10 @@ Route::post('/login',[AuthenticationController::class,'login'])->name('loginSubm
 Route::post('/register',[AuthenticationController::class,'register'])->name('registerSubmit');
 Route::post('/logout',[AuthenticationController::class,'logout'])->name('logout');
 Route::post('/question',[QuestionController::class,'storeQuestions'])->name('questions.store');
-Route::get('/question/form',[QuestionController::class,'showForm'])->name('showQuesForm');
+Route::post('/question/form',[QuestionController::class,'showForm'])->name('showQuesForm');
 Route::get('/question/all',[QuestionController::class,'showAllQues'])->name('showAllQuestion');
 Route::get('/question/{question}',[QuestionController::class,'showOneQues'])->name('showOneQuestion');
+Route::get('/edit/question/{question}',[QuestionController::class,'editOneQues'])->name('editQuestion');
+Route::put('/update/question/{question}',[QuestionController::class,'updateOneQues'])->name('updateQuestion');
+Route::delete('/delete/question/{question}',[QuestionController::class,'deleteOneQues'])->name('deleteQuestion');
 Route::post('/question/{question}/answer',[AnswerController::class,'storeAnswers'])->name('answers.store');

@@ -1,6 +1,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<div class="mt-4">
+<div class="mt-4" style="max-width: 400px;" justify-content="center">
 
     <!-- Success Message -->
     @if(session('success'))
@@ -20,16 +20,15 @@
 
             @if(!$authAnswer)
                 <div class="border rounded-4 p-3 bg-light">
-                    <h5 class="mb-3">Add Comment</h5>
                     <form action="{{route('answers.store',$question)}}" method="POST">
                         @csrf
                         <textarea name="answer" class="form-control mb-3" placeholder="Write your answer..." rows="4"></textarea>
-                        <button type="submit" class="btn btn-primary w-100">Submit answer</button>
+                        <button type="submit" class="btn btn-primary w-100">Answer</button>
                     </form>
                 </div>
             @else
                 <div class="alert alert-info rounded-4">
-                    You already posted a comment on this post.
+                    You have answered.
                 </div>
             @endif
         </div>
@@ -41,7 +40,7 @@
                 <div class="d-flex flex-column flex-sm-row justify-content-between gap-2 mb-2">
                     <div>
                         <strong>{{ $answer->user->name }}</strong>
-                        <div class="text-muted small">{{ optional($answer->created_at)->diffForHumans() }}</div>
+                        <div class="text-muted small">{{ $answer->created_at->diffForHumans() }}</div>
                     </div>
                     @if(auth()->id() == $answer->user_id)
                         <div class="d-flex gap-2">
