@@ -1,5 +1,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <body class="bg-light d-flex flex-column min-vh-100">
+  <title>Register</title>
 <div class="container flex-grow-1">
   <div class="row justify-content-center align-items-center min-vh-100">
     <div class="col-11 col-sm-10 col-md-8 col-lg-5 col-xl-4">
