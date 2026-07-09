@@ -3,7 +3,7 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
     body, .container, .card, .btn, .badge, .text-muted, .card-title, .card-text { font-family:'Poppins',sans-serif; }
-
+    .card{background:linear-gradient(135deg,#fff,#f4ebff)};
 </style>
 <body class="bg-light">
 <div class="container py-5">
@@ -11,7 +11,7 @@
         <div class="col-lg-9">
             <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
                 <div class="card-body p-4">
-                    <div class="d-flex align-items-center gap-2 mb-3">
+                    <div class="d-flex align-items-center gap-2 mb-3 ">
                         <p class="text-muted mb-0">By: <strong>{{ $question->user->name }} </strong></p> ||
                         <small class="text-muted">
                             {{ $question->created_at->diffForHumans() }}
@@ -19,6 +19,7 @@
                     </div>
 
                     <h2 class="card-title mb-2">{{ $question->question }}</h2>
+                  
                     <span class="badge bg-dark mb-2">{{ $question->category }}</span>
                     @if(!empty($question->imagePath))
                         <div class="mb-4">
@@ -48,12 +49,18 @@
                                             <button type="submit" class="btn btn-sm ">Delete</button>
                                         </form>
                                     @endif
+                                    <!--On clickin the link, 'comments=open' is appended on the URL and answer form is displayed -->
+                                        <a  href="{{ route('showOneQuestion', ['question' => $question, 'comments' => 'open']) }}">
+                                             💬{{ $answers->count() }}
+                                            </a>
                     </div>
                 </div>
             </div>
 
             <div class="mt-4">
-                @include('answer.answer')
+                @if(request('comments') == 'open') 
+                    @include('answer.answer')
+                @endif
             </div>
         </div>
     </div>

@@ -17,6 +17,15 @@
             @auth
                 Welcome, {{ auth()->user()->name }}
             @endauth
+            @foreach($users as $user)
+            @if(!empty($user->imagePath))
+                            <div class="col-md-4 d-flex align-items-center justify-content-center p-3">
+                                <img src="{{ Storage::url($user->imagePath) }}"
+                                    style="width:100%; height:170px; object-fit:cover; border-radius:12px;"
+                                    alt="Question Image">
+                            </div>
+                            @endif
+                            @endforeach
             <form method="POST" action="{{ route('showQuesForm') }}">
                 @csrf
                 <button type="submit" class="btn create-btn">Create question</button>
@@ -45,14 +54,14 @@
                                 <a href="{{ route('showOneQuestion', $question) }}" class="d-block text-decoration-none text-dark">
                                     <span class="badge bg-dark mb-2">{{ $question->category }}</span>
                                     <h2 class="h4 card-title mb-2">{{ $question->question }}</h2>
-                                    <p class="text-muted mb-2">{{ Str::limit($question->description, 100) }}</p>
+                                    <p class="text-muted mb-2">{{ Str::limit($question->description, 50) }} Read More</p>
                                     <p class="text-secondary mb-2">
                                         By <strong>{{ $question->user->name }}</strong> • {{ $question->created_at->diffForHumans() }}
                                     </p>
-                                    <span class="badge rounded-pill bg-light text-secondary d-flex align-items-center gap-2">
+                                    <p class="badge bg-light text-secondary">
                                         💬
                                         {{ $question->answers()->count() }}
-                                    </span>
+                                    </p>
                                 </a>
                                 <div class="d-flex flex-wrap gap-2 align-items-center ">
                                     @if(auth()->id() == $question->user_id)

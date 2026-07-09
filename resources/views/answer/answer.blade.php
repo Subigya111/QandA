@@ -1,6 +1,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<div class="mt-4" style="max-width: 400px;" justify-content="center">
+<div class="mt-4"  justify-content="center">
 
     <!-- Success Message -->
     @if(session('success'))
@@ -15,15 +15,17 @@
                 <div>
                     <h4 class="mb-1 text-muted">Join the conversation</h4>
                 </div>
-                <span class="badge bg-primary text-white py-2 px-3">{{ $answers->count() }} comment{{ $answers->count() === 1 ? '' : 's' }}</span>
+                
             </div>
 
             @if(!$authAnswer)
                 <div class="border rounded-4 p-3 bg-light">
-                    <form action="{{route('answers.store',$question)}}" method="POST">
+                    <form action="{{route('answers.store',$question)}}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <textarea name="answer" class="form-control mb-3" placeholder="Write your answer..." rows="4"></textarea>
+                        <textarea name="answer" class="form-control mb-3" placeholder="Write your answer..." rows="4" required></textarea>
                         <button type="submit" class="btn btn-primary w-100">Answer</button>
+                        <label class="form-label fw-semibold">Picture</label>
+                            <input id="avatar" name="image" type="file" accept="image/*" class="form-control">
                     </form>
                 </div>
             @else
@@ -44,25 +46,40 @@
                     </div>
                     @if(auth()->id() == $answer->user_id)
                         <div class="d-flex gap-2">
-                            <form action="#" method="GET" class="m-0">
+                            <form action="{{route('editAnswer',$answer')}}" method="GET" class="m-0" enctype="multipart/form-data">
                                 @csrf
                                 @method('GET')
-                                <button class="btn btn-sm btn-warning">Edit</button>
+                                <button class="btn btn-sm ">Edit</button>
                             </form>
-                            <form action="#" method="POST" class="m-0">
+                            <form action="{{route('deleteAnswer',$answer)}}" method="POST" class="m-0">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-sm btn-danger">Delete</button>
+                                <button class="btn btn-sm ">Delete</button>
                             </form>
+                           
                         </div>
                     @endif
                 </div>
-                <p class="mb-0">{{ $answer->answer }}</p>
+                @if(!empty($answer->imagePath))
+                        <div class="mb-4">
+                            <p style="white-space: pre-line" class="card-text mb-3">
+                                {{ $answer->answer }}
+                            </p>
+                            <img src="{{ Storage::url($answer->imagePath) }}"
+                                 class="rounded-4 border shadow-sm d-block mx-auto"
+                                 alt="Answer Image">
+                        </div>
+                    @else
+                        <p style="white-space: pre-line" class="card-text mb-4">
+                            {{ $answer->answer }}
+                        </p>
+                    @endif
             </div>
+
         </div>
     @empty
         <div class="alert alert-secondary rounded-4">
-            No answer yet. Be the first to leave feedback.
+            No answer yet.
         </div>
     @endforelse
 

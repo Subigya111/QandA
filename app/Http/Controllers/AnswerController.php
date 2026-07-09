@@ -22,7 +22,12 @@ class AnswerController extends Controller
             'imagePath'=>$path
 
         ]);
-        return redirect()->route('showOneQuestion',$question)->with('success','Answer added');
+        return redirect()->route('showOneQuestion', ['question' => $question, 'comments' => 'open'])->with('success','Answer added');
         
+    }
+    public function deleteAnswer(Answer $answer){
+        $answer->delete();
+        return redirect()->route('showOneQuestion',['question' => $answer->question_id, 'comments' => 'open'])->with('success','Comment Deleted');
+
     }
 }
