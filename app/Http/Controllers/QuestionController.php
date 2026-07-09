@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\Answer;
+use App\Models\User;
 use App\Http\Requests\QuestionRequest;
 use App\Http\Requests\UpdateQuestionRequest;
 
@@ -29,9 +30,10 @@ class QuestionController extends Controller
         ]);
         return redirect()->route('showAllQuestion')->with('success','Question added');
     }
-    public function showAllQues(){
+    public function showAllQues(User $user){
         $questions=Question::with('user')->orderByDesc('created_at')->get();
-        return view('main.showAll',compact('questions'));
+        $users=User::where('imagePath',$user->imagePath)->get();
+        return view('main.showAll',compact('questions','users'));
     }
     public function showOneQues(Question $question){
         $answers=Answer::with('user')->where('question_id',$question->id)->orderByDesc('created_at')->get();

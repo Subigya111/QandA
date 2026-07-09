@@ -40,27 +40,28 @@
                             <label class="form-label fw-semibold">Select a category </label>
                             <div class="d-flex flex-wrap align-items-center gap-2">
                                 <div class="form-check d-inline-flex align-items-center m-0">
-                                    <input class="form-check-input me-1" type="radio" name="category" id="tech" value="Tech" required>
+                                    <input class="form-check-input " type="radio" name="category" id="tech" value="Tech" required>
                                     <label class="form-check-label" for="tech">💻Tech</label>
                                 </div>
                                 ||
                                 <div class="form-check d-inline-flex align-items-center m-0">
-                                    <input class="form-check-input me-1" type="radio" name="category" id="life" value="Life" required>
+                                    <input class="form-check-input " type="radio" name="category" id="life" value="Life" required>
                                     <label class="form-check-label" for="life">🌱Life</label>
                                 </div>
                                 ||
                                 <div class="form-check d-inline-flex align-items-center m-0">
-                                    <input class="form-check-input me-1" type="radio" name="category" id="sports" value="Sports" required>
+                                    <input class="form-check-input" type="radio" name="category" id="sports" value="Sports" required>
                                     <label class="form-check-label" for="sports">⚽Sports</label>
                                 </div>
                                 ||
                                 <div class="form-check d-inline-flex align-items-center m-0">
-                                    <input class="form-check-input me-1" type="radio" name="category" id="music" value="Music" required>
+                                    <input class="form-check-input" type="radio" name="category" id="music" value="Music" required>
                                     <label class="form-check-label" for="music">🎵Music</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-end">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{ url()->previous() }}" class="btn btn-secondary btn-sm">Cancel</a>
                             <button type="submit" class="btn btn-primary">Ask</button>
                         </div>
                     </form>

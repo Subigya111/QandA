@@ -26,3 +26,7 @@ Route::get('/edit/question/{question}',[QuestionController::class,'editOneQues']
 Route::put('/update/question/{question}',[QuestionController::class,'updateOneQues'])->name('updateQuestion');
 Route::delete('/delete/question/{question}',[QuestionController::class,'deleteOneQues'])->name('deleteQuestion');
 Route::post('/question/{question}/answer',[AnswerController::class,'storeAnswers'])->name('answers.store');
+
+Route::delete('/delete/answer/{answer}',[AnswerController::class,'deleteAnswer'])->name('deleteAnswer');
+Route::get('/edit/answer/{answer}',[AnswerController::class,'editAnswer'])->name('editAnswer');
+Route::put('/update/answer/{answer}',[AnswerController::class,'updateAnswer'])->name('updateAnswer');
