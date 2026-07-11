@@ -27,7 +27,7 @@
                                 {{ $question->description }}
                             </p>
                             <img src="{{ Storage::url($question->imagePath) }}"
-                                 class="rounded-4 border shadow-sm d-block mx-auto"
+                                 class="rounded-4 border  d-block mx-auto"
                                  alt="Question Image">
                         </div>
                     @else

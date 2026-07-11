@@ -41,10 +41,15 @@ class QuestionController extends Controller
         return view('main.showOneQues',compact('question','answers','authAnswer'));
     }
     public function editOneQues(Question $question){
+        if(auth()->id()!==$question->user_id){
+            return redirect()->route('login')->with('error','Not Allowed');
+        }
         return view('main.showEditQues',compact('question'));
     }
     public function updateOneQues(UpdateQuestionRequest $request, Question $question){
-        
+        if (auth()->id()!==$question->user_id){
+            return redirect()->route('login')->with('error','Not Allowed');
+        }
         $validated=$request->validated();
         $imgPath=null;
         if($request->hasFile('image')){
@@ -55,6 +60,9 @@ class QuestionController extends Controller
         return redirect()->route('showOneQuestion',$question)->with('success','Updated');
     }
     public function deleteOneQues(Question $question){
+        if (auth()->id()!==$question->user_id){
+            return redirect()->route('login')->with('error','Not Allowed');
+        }
         $question->delete();
         return redirect()->route('showAllQuestion')->with('success','Deleted');
     }

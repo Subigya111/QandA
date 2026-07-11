@@ -6,7 +6,8 @@
     <title>Question Form</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
-        body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#fdf2f8,#eef2ff)}
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        body{font-family:'Poppins',sans-serif;}
         .card{border:none;border-radius:16px;box-shadow:0 10px 25px rgba(0,0,0,.08)}
         .card-header{background:linear-gradient(90deg,#7c3aed,#ec4899);color:#fff;font-weight:600}
         .form-control{border-radius:10px}
