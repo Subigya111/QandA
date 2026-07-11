@@ -46,11 +46,7 @@
                     </div>
                     @if(auth()->id() == $answer->user_id)
                         <div class="d-flex gap-2">
-                            <form action="{{route('editAnswer',$answer')}}" method="GET" class="m-0" enctype="multipart/form-data">
-                                @csrf
-                                @method('GET')
-                                <button class="btn btn-sm ">Edit</button>
-                            </form>
+                            <a href="{{route('editAnswer',$answer)}}" class="btn btn-sm ">Edit</a>
                             <form action="{{route('deleteAnswer',$answer)}}" method="POST" class="m-0">
                                 @csrf
                                 @method('DELETE')
@@ -66,7 +62,7 @@
                                 {{ $answer->answer }}
                             </p>
                             <img src="{{ Storage::url($answer->imagePath) }}"
-                                 class="rounded-4 border shadow-sm d-block mx-auto"
+                                 class="  d-block mx-auto" style="max-height: 400px; width: auto;"
                                  alt="Answer Image">
                         </div>
                     @else
