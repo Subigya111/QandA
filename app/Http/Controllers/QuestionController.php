@@ -48,6 +48,10 @@ class QuestionController extends Controller
         $authAnswer=Answer::where('question_id',$question->id)->where('user_id',auth()->id())->first();//fetches answer from logged in user
         return view('main.showOneQues',compact('question','answers','authAnswer'));
     }
+    public function showOneUser(){
+        $questions=Question::with('user')->where('user_id',auth()->id())->orderByDesc('created_at')->get();
+        return view('main.showOneUser',compact('questions'));
+    }
     public function editOneQues(Question $question){
         if(auth()->id()!==$question->user_id){
             return redirect()->route('login')->with('error','Not Allowed');

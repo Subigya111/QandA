@@ -18,16 +18,16 @@
 <nav class="site-header">
     <div class="brand">
         <a href="#">The Blog-App</a>
-        <small>Made with Laravel ❤️ by <a href="#" target="_blank">Subigya</a></small>
+        <small>Made with Laravel ❤️ by <a href="https://github.com/Subigya111/QandA" target="_blank">Subigya</a></small>
     </div>
     
     <div class="nav-actions">
         @auth
         
-            @if($route !== 'posts.user')
+            @if($route !== 'showOneUser')
                 <div class="user-section">
                     <span class="user-name">- Hi, {{ $user->name }}</span>
-                    <a href="#">
+                    <a href="{{route('showOneUser')}}">
                         @if($user->imagePath)
                             <img src="{{ asset('storage/'.$user->imagePath) }}" alt="{{ $user->name }}" class="user-avatar">
                         @else
@@ -35,8 +35,7 @@
                         @endif
                     </a>
                 </div>
-            @else
-                <a href="{{ url()->previous() }}" class="back-btn">← Back</a>
+          
             @endif
             
             @if($route !== 'showAllQuestion') <form method="GET" action="{{ route('showAllQuestion') }}">
