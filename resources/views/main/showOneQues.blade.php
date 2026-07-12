@@ -39,7 +39,7 @@
 
                    
                     <div class="d-flex flex-wrap gap-2 align-items-center post-actions">
-                         <a href="{{ route('showAllQuestion') }}" class="btn btn-sm">
+                         <a href="{{ url()->previous()}}" class="btn btn-sm">
                         Back
                     </a>
                                     @if(auth()->id() == $question->user_id)
