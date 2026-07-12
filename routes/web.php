@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/edit/question/{question}',[QuestionController::class,'editOneQues'])->name('editQuestion');
     Route::put('/update/question/{question}',[QuestionController::class,'updateOneQues'])->name('updateQuestion');
     Route::delete('/delete/question/{question}',[QuestionController::class,'deleteOneQues'])->name('deleteQuestion');
+    Route::get('/questions',[QuestionController::class,'showCategory'])->name('categoryQuestions');
     Route::post('/logout',[AuthenticationController::class,'logout'])->name('logout');
     Route::post('/question/{question}/answer',[AnswerController::class,'storeAnswers'])->name('answers.store');
     Route::get('/edit/answer/{answer}',[AnswerController::class,'editAnswer'])->name('editAnswer');
