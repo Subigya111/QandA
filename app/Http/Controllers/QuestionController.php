@@ -35,6 +35,14 @@ class QuestionController extends Controller
         $users=User::where('imagePath',$user->imagePath)->get();
         return view('main.showAll',compact('questions','users'));
     }
+    public function showCategory(Request $request){
+        if($request->filled('category')){
+            $category = ucfirst(strtolower($request->category)); //makes first letter in capital
+            $questions=Question::where('category',$category)->get();
+            
+        }
+        return view('main.showOneCategory',compact('questions'));
+    }
     public function showOneQues(Question $question){
         $answers=Answer::with('user')->where('question_id',$question->id)->orderByDesc('created_at')->get();
         $authAnswer=Answer::where('question_id',$question->id)->where('user_id',auth()->id())->first();//fetches answer from logged in user

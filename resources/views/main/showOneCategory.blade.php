@@ -11,8 +11,10 @@
 </style>
 
 <div class="container my-5 page-shell">
-            <h3 class="text-muted mb-3">All  of your interests in one place</h3>
-            
+    <h3 class="text-muted mb-3">
+        All {{ $questions->first()->category }} posts
+    </h3>
+        
 
     @if(session('success'))
         <div class="alert alert-success rounded-4 shadow-sm">
